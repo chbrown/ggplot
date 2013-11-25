@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
-from copy import deepcopy
-from .geom import geom
 from scipy.stats import gaussian_kde
 import numpy as np
+from .base import geom_base
 
 
-class geom_density(geom):
+class geom_density(geom_base):
     VALID_AES = ['x', 'color', 'alpha', 'linestyle', 'fill', 'label']
 
     def plot_layer(self, layer):
@@ -15,7 +14,7 @@ class geom_density(geom):
             x = layer.pop('x')
         else:
             raise Exception("geom_density(): Need a aesthetic x mapping!")
-            
+
         if 'fill' in layer:
             fill = layer.pop('fill')
         else:
@@ -27,7 +26,7 @@ class geom_density(geom):
                 # try to use it as a pandas.tslib.Timestamp
                 x = [ts.toordinal() for ts in x]
             except:
-                raise Exception("geom_density(): aesthetic x mapping needs to be convertable to float!")         
+                raise Exception("geom_density(): aesthetic x mapping needs to be convertable to float!")
         kde = gaussian_kde(x)
         bottom = np.min(x)
         top = np.max(x)

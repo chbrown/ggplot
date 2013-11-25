@@ -1,12 +1,15 @@
 from copy import deepcopy
-from ggplot.components import aes
+from ggplot.components.aes import aes
 
-class geom(object):
+
+class geom_base(object):
+    VALID_AES = []
+
     def __init__(self, *args, **kwargs):
         if "colour" in kwargs:
             kwargs["color"] = kwargs["colour"]
             del kwargs["colour"]
-        if len(args)==1:
+        if len(args) == 1:
             if isinstance(args[0], aes):
                 self.manual_aes = {k: v for k, v in kwargs.items() if k in self.VALID_AES}
                 return

@@ -1,11 +1,12 @@
 import matplotlib.pyplot as plt
 from copy import deepcopy
-from .geom import geom
 import pandas as pd
 import numpy as np
 from ggplot.components import smoothers
+from .base import geom_base
 
-class stat_smooth(geom):
+
+class stat_smooth(geom_base):
     VALID_AES = ['x', 'y', 'color', 'alpha', 'label', 'se', 'linestyle', 'method', 'span', 'level']
 
     def plot_layer(self, layer):

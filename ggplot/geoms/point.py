@@ -3,9 +3,10 @@ import matplotlib as mpl
 from matplotlib.colors import Normalize
 import numpy as np
 from copy import deepcopy
-from .geom import geom
+from .base import geom_base
 
-class geom_point(geom):
+
+class geom_point(geom_base):
     VALID_AES = ['x', 'y', 'size', 'color', 'alpha', 'shape', 'marker', 'label', 'cmap']
 
     def plot_layer(self, layer):
@@ -22,4 +23,3 @@ class geom_point(geom):
             layer["color"] = mpl.rcParams.get("axes.color_cycle", ["#333333"])[0]
 
         plt.scatter(**layer)
-

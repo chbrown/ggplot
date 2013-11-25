@@ -5,10 +5,9 @@ import matplotlib as mpl
 from matplotlib.dates import DateFormatter
 from matplotlib.ticker import MultipleLocator
 
-from .components import colors, linestyles, shapes, size, linestyles
-from .components import aes
+from .components import colors, linestyles, shapes, size
+from .components.aes import aes
 from .components.legend import draw_legend
-from .geoms import *
 from .scales import *
 from .themes import *
 from .themes.theme_gray import _set_default_theme_rcparams, _theme_grey_post_plot_callback
@@ -29,6 +28,7 @@ def is_identity(x):
         return True
     else:
         return False
+
 
 class ggplot(object):
     """
@@ -116,14 +116,14 @@ class ggplot(object):
         self.theme_applied = False
         # We're going to default to making the plot appear when __repr__ is called.
         self.rcParams = {"interactive": "True"}
-        # Callbacks to change aspects of each axis 
+        # Callbacks to change aspects of each axis
         self.post_plot_callbacks = []
 
         # continuous color configs
         self.color_scale = None
         self.colormap = plt.cm.Blues
         self.manual_color_list = None
-    
+
     def __repr__(self):
         # Adding rc=self.rcParams does not validate/parses the params which then
         # throws an error during plotting!
@@ -333,7 +333,7 @@ class ggplot(object):
                     box = axs.get_position()
                     axs.set_position([box.x0, box.y0, box.width * 0.8, box.height])
                     ax = axs
-                
+
                 cntr = 0
                 for ltype, legend in self.legend.items():
                     lname = self.aesthetics.get(ltype, ltype)
@@ -396,7 +396,7 @@ class ggplot(object):
                 layers.append(frame)
 
         return layers
-        
+
     def _apply_post_plot_callbacks(self, axis):
         for cb in self.post_plot_callbacks:
             cb(axis)

@@ -1,12 +1,8 @@
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-from copy import deepcopy
-from .geom import geom
+from .base import geom_base
 
 
-
-class geom_area(geom):
+class geom_area(geom_base):
     VALID_AES = ['x', 'ymin', 'ymax', 'color', 'alpha', 'label']
 
     def plot_layer(self, layer):
@@ -16,4 +12,3 @@ class geom_area(geom):
         y1 = layer.pop('ymin')
         y2 = layer.pop('ymax')
         plt.fill_between(x, y1, y2, **layer)
-

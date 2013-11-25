@@ -1,11 +1,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from .base import geom_base
 
-from .geom import geom
 
-
-class geom_tile(geom):
+class geom_tile(geom_base):
     VALID_AES = ['x', 'y', 'fill']
 
     def plot_layer(self, layer):

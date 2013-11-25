@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+
 class ggtitle(object):
     def __init__(self, title):
         self.title = title
@@ -8,6 +9,7 @@ class ggtitle(object):
         gg = deepcopy(gg)
         gg.title = self.title
         return gg
+
 
 class xlab(object):
     def __init__(self, xlab):
@@ -18,6 +20,7 @@ class xlab(object):
         gg.xlab = self.xlab
         return gg
 
+
 class xlim(object):
     def __init__(self, low, high):
         self.low, self.high = low, high
@@ -26,6 +29,7 @@ class xlim(object):
         gg = deepcopy(gg)
         gg.xlimits = [self.low, self.high]
         return gg
+
 
 class ylim(object):
     def __init__(self, low, high):
@@ -36,6 +40,7 @@ class ylim(object):
         gg.ylimits = [self.low, self.high]
         return gg
 
+
 class ylab(object):
     def __init__(self, ylab):
         self.ylab = ylab
@@ -44,6 +49,7 @@ class ylab(object):
         gg = deepcopy(gg)
         gg.ylab = self.ylab
         return gg
+
 
 class labs(object):
     def __init__(self, xlab=None, ylab=None):

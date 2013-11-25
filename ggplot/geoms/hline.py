@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
-from copy import deepcopy
-from .geom import geom
+from .base import geom_base
 
-class geom_hline(geom):
+
+class geom_hline(geom_base):
     VALID_AES = ['y', 'xmin', 'xmax', 'color', 'linestyle', 'alpha', 'label']
+
     def plot_layer(self, layer):
         layer = {k: v for k, v in layer.items() if k in self.VALID_AES}
         layer.update(self.manual_aes)
@@ -26,5 +27,3 @@ class geom_hline(geom):
             plt.axhline(y=y, xmax=xmax, **layer)
         else:
             plt.axhline(y=y, **layer)
-
-

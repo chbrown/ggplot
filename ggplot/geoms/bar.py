@@ -1,18 +1,17 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from copy import deepcopy
-from .geom import geom
 from pandas.lib import Timestamp
+from .base import geom_base
 
 
-class geom_bar(geom):
-    VALID_AES = ['x', 'color', 'alpha', 'fill', 'label', 'weight']
+class geom_bar(geom_base):
+    VALID_AES = ['x', 'color', 'alpha', 'fill', 'label', 'weight', 'stat']
 
     def plot_layer(self, layer):
         layer = {k: v for k, v in layer.items() if k in self.VALID_AES}
         layer.update(self.manual_aes)
-        x = layer.pop('x')
+
         if 'weight' not in layer:
             counts = pd.value_counts(x)
             labels = counts.index.tolist()
@@ -23,7 +22,7 @@ class geom_bar(geom):
             if not isinstance(x[0], Timestamp):
                 labels = x
             else:
-                df = pd.DataFrame({'weights':weights, 'timepoint': pd.to_datetime(x)})
+                df = pd.DataFrame({'weights': weights, 'timepoint': pd.to_datetime(x)})
                 df = df.set_index('timepoint')
                 ts = pd.TimeSeries(df.weights, index=df.index)
                 ts = ts.resample('W', how='sum')
@@ -39,6 +38,6 @@ class geom_bar(geom):
         plt.bar(indentation, weights, width, **layer)
         plt.autoscale()
         return [
-                {"function": "set_xticks", "args": [indentation+width/2]},
-                {"function": "set_xticklabels", "args": [labels]}
-            ]
+            {"function": "set_xticks", "args": [indentation+width/2]},
+            {"function": "set_xticklabels", "args": [labels]}
+        ]

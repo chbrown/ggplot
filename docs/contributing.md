@@ -11,54 +11,54 @@ going in the right direction.
 
 ## Getting Started
 To start, let's reimplement a geom that we all know and love `geom_point`. It's pretty
-straightforward - it's going to take some x and y coordinates and make a 
-scatterplot. You can look at the code here: 
+straightforward - it's going to take some x and y coordinates and make a
+scatterplot. You can look at the code here:
 
 ```
 import matplotlib.pyplot as plt
-from .geom import geom
+from .base import geom_base
 
 class geom_point(geom):
     VALID_AES = ['x', 'y', 'size', 'color', 'alpha', 'shape', 'marker', 'label', 'cmap']
-    
+
     def plot_layer(self, layer):
         layer = {k: v for k, v in layer.items() if k in self.VALID_AES}
         layer.update(self.manual_aes)
-        
+
         if "size" in layer:
           layer["s"] = layer["size"]
           del layer["size"]
-        
+
         if "cmap" in layer:
           layer["c"] = layer["color"]
           del layer["color"]
-        
+
         plt.scatter(**layer)
 ```
 
 ### Imports
 The first thing you probably noticed is the imports. First, we imported `pyplot` as `plt`
 since this is the regular convention. `ggplot` uses `pyplot` for (nearly) all plots (as
-opposed to axes). This makes things simple and keeps the geoms focused only on doing 1 
+opposed to axes). This makes things simple and keeps the geoms focused only on doing 1
 thing.
 
-The second thing we import is the `geom` object. We'll go into more detail on this in a 
-second. 
+The second thing we import is the `geom` object. We'll go into more detail on this in a
+second.
 
 ```
 import matplotlib.pyplot as plt
-from .geom import geom
+from .base import geom_base
 ```
 
 ### Inheriting from `geom`
 As mentioned previously, all of our `geom_*` and `stat_*` (for the time being) inherit
-from `geom`. Each of our geoms inherits from the `geom` object. This is going to give 
+from `geom`. Each of our geoms inherits from the `geom` object. This is going to give
 it the delightful `+` properties that make it possible to magically add layers together.
 
 In addition, it keeps things easy so that when it comes time to render the plot, all of
 our plot operations are done using the same type of object.
 ```
-from .geom import geom
+from .base import geom_base
 ```
 
 ### Defining the `aes`
@@ -85,7 +85,7 @@ ignore for a particular geom -- which makes it super easy to combine plots that 
 different aesthetics.
 
 ### Handling Layers
-This is the only method you need to implement when you're creating a new geom. It's 
+This is the only method you need to implement when you're creating a new geom. It's
 actually quite a simple method. `plot_layer` accepts a `layer` object which is just
 a dictionary of data that looks like this:
 ```
@@ -99,7 +99,7 @@ There are a few things you should know about layers;
     - You can expect that incoming discrete variables (i.e. shape or color), will
     come in with only 1 value.
     - You can expect that incoming continuous variables (i.e. x, y) will come in
-    as a lists of equal length. 
+    as a lists of equal length.
 
 Unfortunately if you're reading this then you're interested in contributing to
 `ggplot` which means you'll need to write some `matplotlib` code. Ironically even though
@@ -107,7 +107,7 @@ I developed `ggplot` to stop writing `matplotlib`, I now find myself writing mor
 `matplotlib` in order to support `ggplot`. In any event, the `matplotlib` plot methods
 do not have consistent names for their arguments. As a result, there are time when you'll
   have to edit names of the variables in your layer in order to accomodate `matplotlib`.
-You can see here that we're changing the name of the `size` variable to `s` and the 
+You can see here that we're changing the name of the `size` variable to `s` and the
 `color` variable to `c`.
 
 ```
@@ -135,11 +135,11 @@ to make a `geom_point` we need a few basic things:
 
 We need to map each of these arguments to a named argument for the `plt.scatter` function.
 Once we've done that, we're going to pass in these arguments using `*args`. Note that for some
-plotting methods (such as `plt.plot`), you can't specify certain arguments using `*args` (for 
+plotting methods (such as `plt.plot`), you can't specify certain arguments using `*args` (for
 example x and y).
 
 ### That's It
-That's really all you have to do to add a geom! It's actually fairly simple. The core `ggplot` 
+That's really all you have to do to add a geom! It's actually fairly simple. The core `ggplot`
 functions will take care of the layering, faceting, etc. neccessary for advanced plotting.
 
 

@@ -1,9 +1,10 @@
 import matplotlib.pyplot as plt
 from copy import deepcopy
-from .geom import geom
 import pandas as pd
+from .base import geom_base
 
-class stat_bin2d(geom):
+
+class stat_bin2d(geom_base):
     VALID_AES = ['x', 'y', 'alpha', 'label']
 
     def plot_layer(self, layer):

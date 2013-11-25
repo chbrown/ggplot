@@ -2,11 +2,12 @@ import matplotlib.pyplot as plt
 from itertools import groupby
 from operator import itemgetter
 from copy import deepcopy
-from .geom import geom
+from .base import geom_base
 
 
-class geom_step(geom):
+class geom_step(geom_base):
     VALID_AES = ['x', 'y', 'color', 'alpha', 'linestyle', 'label', 'size', 'group']
+
     def plot_layer(self, layer):
         layer = {k: v for k, v in layer.items() if k in self.VALID_AES}
         layer.update(self.manual_aes)
@@ -33,5 +34,5 @@ class geom_step(geom):
         else:
             g = layer.pop('group')
             for k, v in groupby(sorted(zip(x_stepped, y_stepped, g), key=itemgetter(2)), key=itemgetter(2)):
-                x_g, y_g, _ = zip(*v) 
+                x_g, y_g, _ = zip(*v)
                 plt.plot(x_g, y_g, **layer)

@@ -1,9 +1,9 @@
 from copy import deepcopy
-from .geom import geom
 import numpy as np
-import pandas as pd
+from .base import geom_base
 
-class geom_jitter(geom):
+
+class geom_jitter(geom_base):
     VALID_AES = ['jitter']
 
     def __radd__(self, gg):

@@ -1,10 +1,10 @@
 import matplotlib.pyplot as plt
 import sys
 from copy import deepcopy
-from .geom import geom
+from .base import geom_base
 
 
-class geom_histogram(geom):
+class geom_histogram(geom_base):
     VALID_AES = ['x', 'color', 'alpha', 'label', 'binwidth']
 
     def plot_layer(self, layer):
@@ -23,5 +23,5 @@ class geom_histogram(geom):
             layer['bins'] = 30
             sys.stderr.write("binwidth defaulted to range/30. " +
                              "Use 'binwidth = x' to adjust this.\n")
-                
+
         plt.hist(**layer)
